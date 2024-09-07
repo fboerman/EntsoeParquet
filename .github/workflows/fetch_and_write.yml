@@ -2,6 +2,8 @@ name: Fetch and Write
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *"
 
 jobs:
   fetch_to_parquet:
