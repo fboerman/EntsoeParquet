@@ -19,7 +19,8 @@ jobs:
           python-version: '3.12'
       - name: Install requirements
         run: >-
-          python -r
+          python -m
+          pip install -r
           requirements.txt
       - name: Fetch and Write Data
         run: python fetch_to_parquet.py
