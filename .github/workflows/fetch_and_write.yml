@@ -1,0 +1,32 @@
+name: Fetch and Write
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch_to_parquet:
+    name: Fetch Data and write to parquet
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install requirements
+        run: >-
+          python -r
+          requirements.txt
+      - name: Fetch and Write Data
+        run: python fetch_to_parquet.py
+        env:
+          ENTSOE_USERNAME: ${{ secrets.ENTSOE_USERNAME }}
+          ENTSOE_PWD: ${{ secrets.ENTSOE_PWD }}
+      - name: Upload possible new data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: '*.parquet last_edits.json'
+          commit_message: 'Automated data fetch'
+
