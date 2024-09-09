@@ -43,10 +43,6 @@ if __name__ == '__main__':
             continue
         logger.info(table['name'])
         sftp.chdir(f'/TP_export/{table["table"]}')
-        last_modified = max(
-            sftp.listdir_attr('.'),
-            key=lambda f: f.st_mtime
-        )
 
         last_fetch = last_edits.get(table['name'], None)
         timestamps_parsed = []
