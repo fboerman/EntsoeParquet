@@ -17,7 +17,10 @@ if __name__ == '__main__':
         tables = json.load(stream)
 
     for table in tables:
-        logger.info(table)
+        if table.get('disabled', False):
+            continue
+
+        logger.info(table['name'])
         start_time = time()
 
         files = list(glob(os.path.join('data', table['name'], '*.parquet')))
@@ -27,14 +30,16 @@ if __name__ == '__main__':
             , ignore_index=True).sort_values(['mtu', 'zone'])
 
         os.makedirs('data_merged', exist_ok=True)
-        logger.debug('All')
+
         df_all.to_parquet(os.path.join('data_merged', f'{table["name"]}_all.parquet'), index=False)
-        logger.debug('2020+')
-        df_2020 = pd.concat(
-            [pd.read_parquet(f) for f in files if f.split('_')[0] >= '2020']
-            , ignore_index=True).sort_values(['mtu', 'zone'])
-        df_2020.to_parquet(os.path.join('data_merged', f'{table["name"]}_from2020.parquet'), index=False)
-        logger.debug('last 12 months')
+
+        files_after_2020 = [pd.read_parquet(f) for f in files if os.path.basename(f).split('_')[-2] >= '2020']
+        if len(files_after_2020) > 0:
+            df_2020 = pd.concat(
+                files_after_2020
+                , ignore_index=True).sort_values(['mtu', 'zone'])
+            df_2020.to_parquet(os.path.join('data_merged', f'{table["name"]}_from2020.parquet'), index=False)
+
         df_last12months = pd.concat(
             [pd.read_parquet(f) for f in sorted(files[-12:])]
             , ignore_index=True).sort_values(['mtu', 'zone'])

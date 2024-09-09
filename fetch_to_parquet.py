@@ -111,13 +111,12 @@ if __name__ == '__main__':
 
             if 'ResolutionCode' in df and table['name'].startswith('sdac_'):
                 df = pd.DataFrame(df[df['ResolutionCode'] == 'PT60M']).drop(columns=['ResolutionCode'])
-            filename = file_info.filename.replace('.csv', '.parquet')\
-                          .replace(table['table'], '')
+            filename = f"{table['name']}_{file_info.filename.split('_')[0]}_{file_info.filename.split('_')[1]}.parquet"
             df.to_parquet(os.path.join('data', table['name'], filename), index=False)
             manifest.append({
                 'url': f'https://github.com/fboerman/EntsoeParquet/raw/master/data/{table["name"]}/{filename}',
-                'year': int(filename.split('_')[0]),
-                'month': int(filename.split('_')[1]),
+                'year': int(file_info.filename.split('_')[0]),
+                'month': int(file_info.filename.split('_')[1]),
                 'dataset': table['name']
             })
 
