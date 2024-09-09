@@ -33,6 +33,6 @@ jobs:
       - name: Upload possible new data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: '*.parquet last_edits.json'
+          file_pattern: '*.parquet *.json'
           commit_message: 'Automated data fetch'
 

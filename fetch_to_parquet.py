@@ -116,7 +116,7 @@ if __name__ == '__main__':
             manifest.append({
                 'url': f'https://github.com/fboerman/EntsoeParquet/raw/master/data/{table["name"]}/{filename}',
                 'year': int(file_info.filename.split('_')[0]),
-                'month': int(file_info.filename.split('_')[1]),
+                'month': int(file_info.filename.split('_')[1].split('.')[0]),
                 'dataset': table['name']
             })
 
@@ -125,7 +125,7 @@ if __name__ == '__main__':
 
         last_edits[table['name']] = max(timestamps_parsed)
         with open(manifest_file, 'w') as stream:
-            json.dump(manifest, stream)
+            json.dump(sorted(list({v['url']:v for v in manifest}.values()), key=lambda x: x['url']), stream)
 
     with open('last_edits.json', 'w') as stream:
         json.dump(last_edits, stream)
