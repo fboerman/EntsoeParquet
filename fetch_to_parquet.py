@@ -51,7 +51,14 @@ if __name__ == '__main__':
         last_fetch = last_edits.get(table['name'], None)
         timestamps_parsed = []
         os.makedirs('data/' + table['name'], exist_ok=True)
-        for file_info in sftp.listdir_attr('.'):
+        manifest_file = os.path.join('data', table['name'], 'manifest.json')
+        if os.path.exists(manifest_file):
+            with open(manifest_file, 'r') as stream:
+                manifest = json.load(stream)
+        else:
+            manifest = []
+
+        for file_info in sorted(sftp.listdir_attr('.'), key=lambda x: x.filename):
             if last_fetch is not None:
                 if pd.Timestamp(file_info.st_mtime, unit='s').isoformat() <= last_fetch:
                     continue
@@ -104,13 +111,22 @@ if __name__ == '__main__':
 
             if 'ResolutionCode' in df and table['name'].startswith('sdac_'):
                 df = pd.DataFrame(df[df['ResolutionCode'] == 'PT60M']).drop(columns=['ResolutionCode'])
-
-            df.to_parquet('data/' + table['name'] + '/' + file_info.filename.replace('.csv', '.parquet'), index=False)
+            filename = file_info.filename.replace('.csv', '.parquet')\
+                          .replace(table['table'], '')
+            df.to_parquet(os.path.join('data', table['name'], filename, index=False))
+            manifest.append({
+                'url': f'https://github.com/fboerman/EntsoeParquet/raw/master/data/{table["name"]}/{filename}',
+                'year': int(filename.split('_')[0]),
+                'month': int(filename.split('_')[1]),
+                'dataset': table['name']
+            })
 
             timestamps_parsed.append(pd.Timestamp(file_info.st_mtime, unit='s').isoformat())
             logger.debug(f'Took {time() - start_time} seconds')
 
         last_edits[table['name']] = max(timestamps_parsed)
+        with open(manifest_file, 'w') as stream:
+            json.dump(manifest, stream)
 
     with open('last_edits.json', 'w') as stream:
         json.dump(last_edits, stream)
