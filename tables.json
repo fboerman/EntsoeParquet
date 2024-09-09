@@ -11,18 +11,21 @@
     "value_column": "NetPosition[MW]",
     "in_out": false,
     "extra_column": ["Direction", "ContractType"],
-    "custom_function": "fix_netposition"
+    "custom_function": "fix_netposition",
+    "disabled": true
   },
   {
     "name": "sdac_capacities",
     "table": "ForecastedDayAheadTransferCapacities_11.1",
     "value_column": "ForecastTransferCapacity",
-    "in_out": true
+    "in_out": true,
+    "disabled": true
   },
   {
     "name": "sdac_exchanges",
     "table": "DayAheadCommercialSchedules_12.1.F",
     "value_column": "Capacity",
-    "in_out": true
+    "in_out": true,
+    "disabled": true
   }
 ]

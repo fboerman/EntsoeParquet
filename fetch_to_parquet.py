@@ -39,6 +39,8 @@ if __name__ == '__main__':
         last_edits = json.load(stream)
 
     for table in tables:
+        if table.get('disabled', False):
+            continue
         logger.info(table['name'])
         sftp.chdir(f'/TP_export/{table["table"]}')
         last_modified = max(
@@ -53,15 +55,23 @@ if __name__ == '__main__':
             if last_fetch is not None:
                 if pd.Timestamp(file_info.st_mtime, unit='s').isoformat() <= last_fetch:
                     continue
+            # data only really starts after 2014 trail period
+            if file_info.filename.startswith('2014_'):
+                continue
             logger.debug(file_info.filename)
             start_time = time()
             with BytesIO() as buffer:
-                logger.debug("Download from sftp")
                 sftp.getfo(file_info.filename, buffer)
                 buffer.seek(0)
                 df = pd.read_csv(buffer, sep='\t')
-            logger.debug('Processing')
-            df['DateTime'] = pd.to_datetime(df['DateTime'], utc=True).dt.tz_convert('europe/amsterdam')
+            if 'DateTime' in df:
+                time_column = 'DateTime'
+            elif 'DateTime(UTC)' in df:
+                time_column = 'DateTime(UTC)'
+            else:
+                raise Exception('No timecolumn defined!')
+
+            df[time_column] = pd.to_datetime(df[time_column], utc=True).dt.tz_convert('europe/amsterdam')
 
             if table.get('in_out', False):
                 df = df[
@@ -70,7 +80,7 @@ if __name__ == '__main__':
                 ]
                 df = df[(df['OutAreaTypeCode'] == 'BZN') & (df['InAreaTypeCode'] == 'BZN')].sort_values('DateTime')
                 df = df.drop(columns=['OutAreaTypeCode', 'InAreaTypeCode']).rename(columns={
-                    'DateTime': 'mtu',
+                    time_column: 'mtu',
                     'OutMapCode': 'zone_out',
                     'InMapCode': 'zone_in',
                     table['value_column']: 'value'
@@ -83,7 +93,7 @@ if __name__ == '__main__':
                 ]
                 df = df[df['AreaTypeCode'] == 'BZN'].sort_values('DateTime')
                 df = df.drop(columns=['AreaTypeCode']).rename(columns={
-                    'DateTime': 'mtu',
+                    time_column: 'mtu',
                     'MapCode': 'zone',
                     table['value_column']: 'value'
                 })
