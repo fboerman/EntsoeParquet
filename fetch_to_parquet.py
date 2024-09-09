@@ -82,7 +82,7 @@ if __name__ == '__main__':
 
             if table.get('in_out', False):
                 df = df[
-                    ['DateTime', 'ResolutionCode', 'OutAreaTypeCode', 'OutMapCode', 'InAreaTypeCode', 'InMapCode', table['value_column']] +
+                    [time_column, 'ResolutionCode', 'OutAreaTypeCode', 'OutMapCode', 'InAreaTypeCode', 'InMapCode', table['value_column']] +
                     table.get('extra_column', [])
                 ]
                 df = df[(df['OutAreaTypeCode'] == 'BZN') & (df['InAreaTypeCode'] == 'BZN')].sort_values('DateTime')
@@ -95,7 +95,7 @@ if __name__ == '__main__':
                 df = df[(~df['zone_out'].str.startswith('GB_')) & (~df['zone_in'].str.startswith('GB_'))]
             else:
                 df = df[
-                    ['DateTime', 'ResolutionCode', 'AreaTypeCode', 'MapCode', table['value_column']] +
+                    [time_column, 'ResolutionCode', 'AreaTypeCode', 'MapCode', table['value_column']] +
                     table.get('extra_column', [])
                 ]
                 df = df[df['AreaTypeCode'] == 'BZN'].sort_values('DateTime')
