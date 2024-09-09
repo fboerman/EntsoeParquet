@@ -81,7 +81,7 @@ if __name__ == '__main__':
                     [time_column, 'ResolutionCode', 'OutAreaTypeCode', 'OutMapCode', 'InAreaTypeCode', 'InMapCode', table['value_column']] +
                     table.get('extra_column', [])
                 ]
-                df = df[(df['OutAreaTypeCode'] == 'BZN') & (df['InAreaTypeCode'] == 'BZN')].sort_values(time_column)
+                df = df[(df['OutAreaTypeCode'] == 'BZN') & (df['InAreaTypeCode'] == 'BZN')]
                 df = df.drop(columns=['OutAreaTypeCode', 'InAreaTypeCode']).rename(columns={
                     time_column: 'mtu',
                     'OutMapCode': 'zone_out',
@@ -94,7 +94,7 @@ if __name__ == '__main__':
                     [time_column, 'ResolutionCode', 'AreaTypeCode', 'MapCode', table['value_column']] +
                     table.get('extra_column', [])
                 ]
-                df = df[df['AreaTypeCode'] == 'BZN'].sort_values(time_column)
+                df = df[df['AreaTypeCode'] == 'BZN']
                 df = df.drop(columns=['AreaTypeCode']).rename(columns={
                     time_column: 'mtu',
                     'MapCode': 'zone',
