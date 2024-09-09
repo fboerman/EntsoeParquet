@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: "*/10 * * * *"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   fetch_to_parquet:
     name: Fetch Data and write to parquet
