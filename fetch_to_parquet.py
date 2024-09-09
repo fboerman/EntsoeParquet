@@ -103,7 +103,7 @@ if __name__ == '__main__':
                 df = pd.DataFrame(getattr(custom_functions, table['custom_function'])(df))
 
             if 'ResolutionCode' in df and table['name'].startswith('sdac_'):
-                df = pd.DataFrame(df[df['ResolutionCode'] == 'PT60M'])
+                df = pd.DataFrame(df[df['ResolutionCode'] == 'PT60M']).drop(columns=['ResolutionCode'])
 
             df.to_parquet('data/' + table['name'] + '/' + file_info.filename.replace('.csv', '.parquet'), index=False)
 
