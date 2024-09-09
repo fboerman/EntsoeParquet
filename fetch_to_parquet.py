@@ -113,7 +113,7 @@ if __name__ == '__main__':
                 df = pd.DataFrame(df[df['ResolutionCode'] == 'PT60M']).drop(columns=['ResolutionCode'])
             filename = file_info.filename.replace('.csv', '.parquet')\
                           .replace(table['table'], '')
-            df.to_parquet(os.path.join('data', table['name'], filename, index=False))
+            df.to_parquet(os.path.join('data', table['name'], filename), index=False)
             manifest.append({
                 'url': f'https://github.com/fboerman/EntsoeParquet/raw/master/data/{table["name"]}/{filename}',
                 'year': int(filename.split('_')[0]),
