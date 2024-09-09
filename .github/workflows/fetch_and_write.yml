@@ -27,6 +27,8 @@ jobs:
         env:
           ENTSOE_USERNAME: ${{ secrets.ENTSOE_USERNAME }}
           ENTSOE_PWD: ${{ secrets.ENTSOE_PWD }}
+      - name: Merge and Write Data
+        run: python merge_parquet.py
       - name: Upload possible new data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:

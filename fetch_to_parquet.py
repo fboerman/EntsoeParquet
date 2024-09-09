@@ -122,7 +122,7 @@ if __name__ == '__main__':
             })
 
             timestamps_parsed.append(pd.Timestamp(file_info.st_mtime, unit='s').isoformat())
-            logger.debug(f'Took {time() - start_time} seconds')
+            logger.debug(f'Took {round(time() - start_time, 2)} seconds')
 
         last_edits[table['name']] = max(timestamps_parsed)
         with open(manifest_file, 'w') as stream:
