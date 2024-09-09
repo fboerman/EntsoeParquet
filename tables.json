@@ -17,14 +17,12 @@
     "name": "sdac_capacities",
     "table": "ForecastedDayAheadTransferCapacities_11.1",
     "value_column": "ForecastTransferCapacity",
-    "in_out": true,
-    "disabled": true
+    "in_out": true
   },
   {
     "name": "sdac_exchanges",
     "table": "DayAheadCommercialSchedules_12.1.F",
     "value_column": "Capacity",
-    "in_out": true,
-    "disabled": true
+    "in_out": true
   }
 ]

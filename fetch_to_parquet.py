@@ -123,7 +123,7 @@ if __name__ == '__main__':
             logger.info(f'Parsed {len(timestamps_parsed)} files')
             last_edits[table['name']] = max(timestamps_parsed)
             with open(manifest_file, 'w') as stream:
-                json.dump(sorted(list({v['url']:v for v in manifest}.values()), key=lambda x: x['url']), stream)
+                json.dump(sorted(list({v['url']:v for v in manifest}.values()), key=lambda x: x['url']), stream, indent=4)
         else:
             logger.info("No new files parsed")
 
