@@ -128,4 +128,4 @@ if __name__ == '__main__':
             logger.info("No new files parsed")
 
     with open('last_edits.json', 'w') as stream:
-        json.dump(last_edits, stream)
+        json.dump(last_edits, stream, indent=4)
