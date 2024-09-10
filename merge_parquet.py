@@ -8,6 +8,15 @@ import os
 from time import time
 
 
+def sort(df, table):
+    if table.get('in_out', False):
+        df = df.sort_values(['mtu', 'zone_in', 'zone_out'])
+    else:
+        df = df.sort_values(['mtu', 'zone'])
+
+    return df
+
+
 if __name__ == '__main__':
     # setup the logging
     logger.remove()  # needed to disable the default one to overrule it
@@ -31,19 +40,21 @@ if __name__ == '__main__':
 
         os.makedirs('data_merged', exist_ok=True)
 
-        df_all.to_parquet(os.path.join('data_merged', f'{table["name"]}_all.parquet'), index=False)
+        sort(df_all, table).to_parquet(os.path.join('data_merged', f'{table["name"]}_all.parquet'), index=False)
 
         files_after_2020 = [pd.read_parquet(f) for f in files if os.path.basename(f).split('_')[-2] >= '2020']
         if len(files_after_2020) > 0:
             df_2020 = pd.concat(
                 files_after_2020
                 , ignore_index=True)
-            df_2020.to_parquet(os.path.join('data_merged', f'{table["name"]}_from2020.parquet'), index=False)
+            sort(df_2020, table).to_parquet(os.path.join('data_merged', f'{table["name"]}_from2020.parquet'), index=False)
 
         df_last12months = pd.concat(
             [pd.read_parquet(f) for f in sorted(files[-12:])]
             , ignore_index=True)
-        df_last12months.to_parquet(os.path.join('data_merged', f'{table["name"]}_last12months.parquet'), index=False)
+        sort(df_last12months, table).to_parquet(
+            os.path.join('data_merged', f'{table["name"]}_last12months.parquet'
+                         ), index=False)
 
         logger.info(f'Took {round(time() - start_time, 2)} seconds')
 
