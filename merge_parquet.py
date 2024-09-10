@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
         df_all = pd.concat(
             [pd.read_parquet(f) for f in files]
-            , ignore_index=True).sort_values(['mtu', 'zone'])
+            , ignore_index=True)
 
         os.makedirs('data_merged', exist_ok=True)
 
@@ -37,12 +37,12 @@ if __name__ == '__main__':
         if len(files_after_2020) > 0:
             df_2020 = pd.concat(
                 files_after_2020
-                , ignore_index=True).sort_values(['mtu', 'zone'])
+                , ignore_index=True)
             df_2020.to_parquet(os.path.join('data_merged', f'{table["name"]}_from2020.parquet'), index=False)
 
         df_last12months = pd.concat(
             [pd.read_parquet(f) for f in sorted(files[-12:])]
-            , ignore_index=True).sort_values(['mtu', 'zone'])
+            , ignore_index=True)
         df_last12months.to_parquet(os.path.join('data_merged', f'{table["name"]}_last12months.parquet'), index=False)
 
         logger.info(f'Took {round(time() - start_time, 2)} seconds')
