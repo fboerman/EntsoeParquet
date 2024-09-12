@@ -1324,5 +1324,11 @@
         "year": 2033,
         "month": 5,
         "dataset": "sdac_exchanges"
+    },
+    {
+        "url": "https://github.com/fboerman/EntsoeParquet/raw/master/data/sdac_exchanges/sdac_exchanges_2033_06.parquet",
+        "year": 2033,
+        "month": 6,
+        "dataset": "sdac_exchanges"
     }
 ]
