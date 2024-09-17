@@ -1426,5 +1426,11 @@
         "year": 2034,
         "month": 10,
         "dataset": "sdac_exchanges"
+    },
+    {
+        "url": "https://github.com/fboerman/EntsoeParquet/raw/master/data/sdac_exchanges/sdac_exchanges_2034_11.parquet",
+        "year": 2034,
+        "month": 11,
+        "dataset": "sdac_exchanges"
     }
 ]
