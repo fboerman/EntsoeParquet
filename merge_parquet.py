@@ -32,7 +32,7 @@ if __name__ == '__main__':
         logger.info(table['name'])
         start_time = time()
 
-        files = list(glob(os.path.join('data', table['name'], '*.parquet')))
+        files = sorted(list(glob(os.path.join('data', table['name'], '*.parquet'))))
 
         df_all = pd.concat(
             [pd.read_parquet(f) for f in files]

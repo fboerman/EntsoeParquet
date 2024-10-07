@@ -1,8 +1,8 @@
 [
   {
     "name": "sdac_prices",
-    "table": "DayAheadPrices_12.1.D",
-    "value_column": "Price",
+    "table": "EnergyPrices_12.1.D_r3",
+    "value_column": "Price[Currency/MWh]",
     "in_out": false
   },
   {
