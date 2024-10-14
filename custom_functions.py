@@ -7,4 +7,4 @@ def fix_netposition(df):
     df['mtu'] = df['mtu'].dt.floor('h', ambiguous='infer')
     df = df.drop_duplicates(subset=['mtu', 'zone'], keep='first')
 
-    return df.drop(columns=['ResolutionCode', 'ContractType', 'Direction'])
+    return df.drop(columns=['ContractType', 'Direction'])
