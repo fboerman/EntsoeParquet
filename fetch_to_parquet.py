@@ -64,6 +64,7 @@ if __name__ == '__main__':
             if file_info.filename.startswith('2014_'):
                 continue
 
+            # dont download data that was already prefilled for the future
             if file_info.filename[:7] > this_month:
                 continue
             logger.debug(file_info.filename)
@@ -106,6 +107,8 @@ if __name__ == '__main__':
                     table['value_column']: 'value'
                 })
                 df = df.drop_duplicates(['mtu', 'zone'], keep='first')
+
+            df = df.rename(columns={'ResolutionCode': 'resolution'})
 
             if 'custom_function' in table:
                 df = pd.DataFrame(getattr(custom_functions, table['custom_function'])(df))
