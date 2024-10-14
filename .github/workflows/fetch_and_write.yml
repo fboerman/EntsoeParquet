@@ -1,0 +1,69 @@
+name: Fetch and Write
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  fetch_to_parquet:
+    name: Fetch Data and write to parquet
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 'master'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - name: Install requirements
+        run: >-
+          python -m
+          pip install -r
+          requirements.txt
+      - name: Fetch and Write Data
+        run: python fetch_to_parquet.py
+        env:
+          ENTSOE_USERNAME: ${{ secrets.ENTSOE_USERNAME }}
+          ENTSOE_PWD: ${{ secrets.ENTSOE_PWD }}
+      - name: Upload possible new data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: '*.parquet *.json'
+          commit_message: 'Automated data fetch'
+  merge_parquet:
+    name: Merge fetched data and write to parquet
+    needs: fetch_to_parquet
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 'master'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - name: Install requirements
+        run: >-
+          python -m
+          pip install -r
+          requirements.txt
+      - name: Merge and Write Data
+        run: python merge_parquet.py
+      - name: Upload possible new merged data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: '*.parquet *.json'
+          commit_message: 'Automated merged data'
+

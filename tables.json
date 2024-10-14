@@ -1,0 +1,28 @@
+[
+  {
+    "name": "sdac_prices",
+    "table": "EnergyPrices_12.1.D_r3",
+    "value_column": "Price[Currency/MWh]",
+    "in_out": false
+  },
+  {
+    "name": "sdac_netposition",
+    "table": "ImplicitAllocationsNetPositions_12.1.E_r3",
+    "value_column": "NetPosition[MW]",
+    "in_out": false,
+    "extra_column": ["Direction", "ContractType"],
+    "custom_function": "fix_netposition"
+  },
+  {
+    "name": "sdac_capacities",
+    "table": "ForecastedDayAheadTransferCapacities_11.1",
+    "value_column": "ForecastTransferCapacity",
+    "in_out": true
+  },
+  {
+    "name": "sdac_exchanges",
+    "table": "DayAheadCommercialSchedules_12.1.F",
+    "value_column": "Capacity",
+    "in_out": true
+  }
+]
