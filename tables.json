@@ -11,14 +11,14 @@
     "value_column": "NetPosition[MW]",
     "in_out": false,
     "extra_column": ["Direction", "ContractType"],
-    "custom_function": "fix_netposition"
+    "custom_function": "fix_netposition",
+    "area_type_code_filter": ["BZN/CTA", "BZN"]
   },
   {
     "name": "sdac_capacities",
     "table": "ForecastedDayAheadTransferCapacities_11.1",
     "value_column": "ForecastTransferCapacity",
-    "in_out": true,
-    "area_type_code_filter": ["BZN/CTA", "BZN"]
+    "in_out": true
   },
   {
     "name": "sdac_exchanges",
