@@ -17,7 +17,8 @@
     "name": "sdac_capacities",
     "table": "ForecastedDayAheadTransferCapacities_11.1",
     "value_column": "ForecastTransferCapacity",
-    "in_out": true
+    "in_out": true,
+    "area_type_code_filter": ["BZN/CTA", "BZN"]
   },
   {
     "name": "sdac_exchanges",
