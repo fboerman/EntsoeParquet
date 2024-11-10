@@ -95,6 +95,7 @@ if __name__ == '__main__':
                     table['value_column']: 'value'
                 })
                 df = df[(~df['zone_out'].str.startswith('GB_')) & (~df['zone_in'].str.startswith('GB_'))]
+                df = df.drop_duplicates(['mtu', 'zone_in', 'zone_out'], keep='first')
             else:
                 df = df[
                     [time_column, 'ResolutionCode', 'AreaTypeCode', 'MapCode', table['value_column']] +
