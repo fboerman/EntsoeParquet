@@ -87,7 +87,7 @@ if __name__ == '__main__':
                     [time_column, 'ResolutionCode', 'OutAreaTypeCode', 'OutMapCode', 'InAreaTypeCode', 'InMapCode', table['value_column']] +
                     table.get('extra_column', [])
                 ]
-                df = df[(df['OutAreaTypeCode'].contains('BZN')) & (df['InAreaTypeCode'].contains('BZN'))]
+                df = df[(df['OutAreaTypeCode'].str.contains('BZN')) & (df['InAreaTypeCode'].str.contains('BZN'))]
                 df = df.drop(columns=['OutAreaTypeCode', 'InAreaTypeCode']).rename(columns={
                     time_column: 'mtu',
                     'OutMapCode': 'zone_out',
@@ -101,7 +101,7 @@ if __name__ == '__main__':
                     [time_column, 'ResolutionCode', 'AreaTypeCode', 'MapCode', table['value_column']] +
                     table.get('extra_column', [])
                 ]
-                df = df[df['AreaTypeCode'].contains('BZN')]
+                df = df[df['AreaTypeCode'].str.contains('BZN')]
                 df = df.drop(columns=['AreaTypeCode']).rename(columns={
                     time_column: 'mtu',
                     'MapCode': 'zone',
