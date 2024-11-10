@@ -82,14 +82,12 @@ if __name__ == '__main__':
 
             df[time_column] = pd.to_datetime(df[time_column], utc=True).dt.tz_convert('europe/amsterdam')
 
-            type_filter = table.get('area_type_code_filter', ['BZN'])
-
             if table.get('in_out', False):
                 df = df[
                     [time_column, 'ResolutionCode', 'OutAreaTypeCode', 'OutMapCode', 'InAreaTypeCode', 'InMapCode', table['value_column']] +
                     table.get('extra_column', [])
                 ]
-                df = df[(df['OutAreaTypeCode'].isin(type_filter)) & (df['InAreaTypeCode'].isin(type_filter))]
+                df = df[(df['OutAreaTypeCode'].contains('BZN')) & (df['InAreaTypeCode'].contains('BZN'))]
                 df = df.drop(columns=['OutAreaTypeCode', 'InAreaTypeCode']).rename(columns={
                     time_column: 'mtu',
                     'OutMapCode': 'zone_out',
@@ -102,7 +100,7 @@ if __name__ == '__main__':
                     [time_column, 'ResolutionCode', 'AreaTypeCode', 'MapCode', table['value_column']] +
                     table.get('extra_column', [])
                 ]
-                df = df[df['AreaTypeCode'].isin(type_filter)]
+                df = df[df['AreaTypeCode'].contains('BZN')]
                 df = df.drop(columns=['AreaTypeCode']).rename(columns={
                     time_column: 'mtu',
                     'MapCode': 'zone',

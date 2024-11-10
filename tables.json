@@ -11,8 +11,7 @@
     "value_column": "NetPosition[MW]",
     "in_out": false,
     "extra_column": ["Direction", "ContractType"],
-    "custom_function": "fix_netposition",
-    "area_type_code_filter": ["BZN/CTA", "BZN"]
+    "custom_function": "fix_netposition"
   },
   {
     "name": "sdac_capacities",
@@ -24,7 +23,6 @@
     "name": "sdac_exchanges",
     "table": "CommercialSchedules_12.1.F_r3",
     "value_column": "DayAheadCapacity[MW]",
-    "area_type_code_filter": ["BZN/CTA/CTY"],
     "in_out": true
   }
 ]
