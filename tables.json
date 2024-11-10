@@ -22,8 +22,9 @@
   },
   {
     "name": "sdac_exchanges",
-    "table": "DayAheadCommercialSchedules_12.1.F",
-    "value_column": "Capacity",
+    "table": "CommercialSchedules_12.1.F_r3",
+    "value_column": "DayAheadCapacity[MW]",
+    "area_type_code_filter": ["BZN/CTA/CTY"],
     "in_out": true
   }
 ]
