@@ -742,5 +742,11 @@
         "year": 2025,
         "month": 4,
         "dataset": "sdac_prices"
+    },
+    {
+        "url": "https://github.com/fboerman/EntsoeParquet/raw/master/data/sdac_prices/sdac_prices_2025_05.parquet",
+        "year": 2025,
+        "month": 5,
+        "dataset": "sdac_prices"
     }
 ]
