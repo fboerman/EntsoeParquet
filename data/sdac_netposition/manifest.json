@@ -760,5 +760,11 @@
         "year": 2025,
         "month": 7,
         "dataset": "sdac_netposition"
+    },
+    {
+        "url": "https://github.com/fboerman/EntsoeParquet/raw/master/data/sdac_netposition/sdac_netposition_2025_08.parquet",
+        "year": 2025,
+        "month": 8,
+        "dataset": "sdac_netposition"
     }
 ]
