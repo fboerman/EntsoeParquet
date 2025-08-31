@@ -766,5 +766,11 @@
         "year": 2025,
         "month": 8,
         "dataset": "sdac_exchanges"
+    },
+    {
+        "url": "https://github.com/fboerman/EntsoeParquet/raw/master/data/sdac_exchanges/sdac_exchanges_2025_09.parquet",
+        "year": 2025,
+        "month": 9,
+        "dataset": "sdac_exchanges"
     }
 ]

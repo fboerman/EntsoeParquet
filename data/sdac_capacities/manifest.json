@@ -766,5 +766,11 @@
         "year": 2025,
         "month": 8,
         "dataset": "sdac_capacities"
+    },
+    {
+        "url": "https://github.com/fboerman/EntsoeParquet/raw/master/data/sdac_capacities/sdac_capacities_2025_09.parquet",
+        "year": 2025,
+        "month": 9,
+        "dataset": "sdac_capacities"
     }
 ]
